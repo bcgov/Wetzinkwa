@@ -1,47 +1,32 @@
----
-output:
-  md_document:
-    variant: markdown_github
----
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-```{r, echo = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "README-"
-)
-```
 
-<!-- Add a project state badge
-See https://github.com/BCDevExchange/Our-Project-Docs/blob/master/discussion/projectstates.md
-If you have bcgovr installed and you use RStudio, click the 'Insert BCDevex Badge' Addin. -->
-
-# Wetzinkwa
+# Wetzin'kwa
+This repository organizes data for the Wetzink'wa area. 
 
 ### Usage
 
-Describe data being used (links), and how to run. Eg:
+There are a series core scripts that are required for the analysis, they can be sourced from the run__all.R script, the scripts run include:
 
-There are four core scripts that are required for the analysis, they need to be run in order:
-
-- 01_clean.R
-- 02_analysis.R
-- 03_visualize.R
+- 01_load.R
+- 02_clean.R, calls:
+  - 02_Shiny_app.R
+  - 02_Shiny_ui.R
+  - 02_Shiny_Server.R
+- 03_analysis
 - 04_output.R
 
-#### Example
+### Data
 
-This is a basic example which shows you how to solve a common problem:
-
-```{r example}
-## basic example code
-```
+Input data is from BC Data Warehouse
 
 ### Project Status
 
+This project is in development.
+
 ### Getting Help or Reporting an Issue
 
-To report bugs/issues/feature requests, please file an [issue](https://github.com/bcgov/Wetzinkwa/issues/).
+To report bugs/issues/feature requests, please file an [issue](https://github.com/bcgov/Wetland_Summary/issues/).
 
 ### How to Contribute
 
@@ -52,7 +37,7 @@ Please note that this project is released with a [Contributor Code of Conduct](C
 ### License
 
 ```
-Copyright 2021 Province of British Columbia
+Copyright 2020 Province of British Columbia
 
 Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
 you may not use this file except in compliance with the License.
@@ -67,3 +52,7 @@ See the License for the specific language governing permissions and limitations 
 
 ---
 *This project was created using the [bcgovr](https://github.com/bcgov/bcgovr) package.* 
+
+This repository is maintained by
+[ENVEcosystems](https://github.com/orgs/bcgov/teams/envecosystems/members).
+
