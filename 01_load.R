@@ -21,13 +21,13 @@ Prov_crs<-crs(bc)
 
 BCr_file <- file.path(spatialOutDir,"BCr.tif")
 if (!file.exists(BCr_file)) {
-  BCr <- fasterize(bcmaps::bc_bound_hres(class='sf'),ProvRast)
-  writeRaster(BCr, filename=BCr_file, format="GTiff", overwrite=TRUE)
-  ProvRast<-raster(nrows=15744, ncols=17216, xmn=159587.5, xmx=1881187.5,
+    ProvRast<-raster(nrows=15744, ncols=17216, xmn=159587.5, xmx=1881187.5,
                    ymn=173787.5, ymx=1748187.5,
                    crs=Prov_crs,
                    res = c(100,100), vals = 1)
   writeRaster(ProvRast, filename=file.path(spatialOutDir,'ProvRast'), format="GTiff", overwrite=TRUE)
+  BCr <- fasterize(bcmaps::bc_bound_hres(class='sf'),ProvRast)
+  writeRaster(BCr, filename=BCr_file, format="GTiff", overwrite=TRUE)
 } else {
   BCr <- raster(BCr_file)
   ProvRast<-raster(file.path(spatialOutDir,'ProvRast.tif'))

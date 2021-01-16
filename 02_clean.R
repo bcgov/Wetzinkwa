@@ -24,18 +24,33 @@
 
 source('header.R')
 
-#Pick an AOI - plan, watersheds, or TSA
-AOI <- UBM
+AOIlist_file<- file.path('tmp/AOIlist')
+if (!file.exists(AOIlist_file)) {
+UBM <- readRDS(UBM, file = 'tmp/UBM')
 
-AOI<-ws %>%
+TSA <- readRDS(file='tmp/TSA') %>%
+  filter(TSA_NUMBER_DESCRIPTION %in% c("Morice TSA")) %>%
+  mutate(area=st_area(.)) %>%
+  dplyr::summarise(area = sum(area))
+
+ws <- readRDS(file='tmp/ws') %>%
   filter(SUB_SUB_DRAINAGE_AREA_NAME %in% c("Bulkley","Morice")) %>%
   mutate(area=st_area(.)) %>%
   dplyr::summarise(area = sum(area))
 
-AOI <- TSA %>%
-  filter(TSA_NUMBER_DESCRIPTION %in% c("Morice TSA")) %>%
-  mutate(area=st_area(.)) %>%
-  dplyr::summarise(area = sum(area))
+AOIlist<-list(UBM,TSA,ws)
+names(AOIlist) <- c('Wetzinkwa','TSA','Watersheds')
+saveRDS(AOIlist, file = AOIlist_file)
+}
+
+#select AOI
+source('02_Shiny_app.R')
+shinyApp(ui = ui, server = server)
+
+AOInum<-as.integer(responses[[1]])
+
+AOI<-AOIlist[AOInum]
+mapview(AOI)
 
 #ggplot(AOI) + geom_sf()
 #st_write(AOI, file.path(spatialOutDir, "AOI.gpkg"), delete_layer = TRUE)
