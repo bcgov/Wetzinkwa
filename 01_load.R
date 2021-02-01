@@ -98,6 +98,24 @@ if (!file.exists(Conserve_file)) {
 }
 Conserve<-readRDS(file='tmp/Conserve')
 
+#UWR
+UWR_file<- file.path('tmp/UWR')
+if (!file.exists(UWR_file)) {
+  UWR<-bcdc_get_data("WHSE_WILDLIFE_MANAGEMENT.WCP_UNGULATE_WINTER_RANGE_SP")
+  st_crs(UWR)<-3005
+  saveRDS(UWR, file = "tmp/UWR")
+}
+UWR<-readRDS(file='tmp/UWR')
+
+#Caribou
+Caribou_file<- file.path('tmp/Caribou')
+if (!file.exists(Caribou_file)) {
+  Caribou<-bcdc_get_data("WHSE_WILDLIFE_MANAGEMENT.WCP_WILDLIFE_HABITAT_AREA_POLY")
+  st_crs(Caribou)<-3005
+  saveRDS(Caribou, file = "tmp/Caribou")
+}
+Caribou<-readRDS(file='tmp/Caribou')
+
 
 #Lands that contribute to Conservation
 #https://github.com/bcgov/designatedlands/releases/download/v0.1.0/designatedlands.gpkg.zip

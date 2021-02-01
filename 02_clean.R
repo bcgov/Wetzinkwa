@@ -24,24 +24,36 @@
 
 source('header.R')
 
+AOIlist<-list(UBM,TSA,ws)
+names(AOIlist) <- c('Wetzinkwa','TSA','Watersheds')
+
 AOIlist_file<- file.path('tmp/AOIlist')
 if (!file.exists(AOIlist_file)) {
 UBM <- readRDS(UBM, file = 'tmp/UBM')
+st_write(UBM, file.path(spatialOutDir, "UBM.gpkg"), delete_layer = TRUE)
 
 TSA <- readRDS(file='tmp/TSA') %>%
   filter(TSA_NUMBER_DESCRIPTION %in% c("Morice TSA")) %>%
   mutate(area=st_area(.)) %>%
   dplyr::summarise(area = sum(area))
+st_write(TSA, file.path(spatialOutDir, "TSA.gpkg"), delete_layer = TRUE)
 
 ws <- readRDS(file='tmp/ws') %>%
   filter(SUB_SUB_DRAINAGE_AREA_NAME %in% c("Bulkley","Morice")) %>%
   mutate(area=st_area(.)) %>%
   dplyr::summarise(area = sum(area))
+st_write(ws, file.path(spatialOutDir, "ws.gpkg"), delete_layer = TRUE)
 
 AOIlist<-list(UBM,TSA,ws)
 names(AOIlist) <- c('Wetzinkwa','TSA','Watersheds')
+
 saveRDS(AOIlist, file = AOIlist_file)
 }
+AOIlist<-readRDS(AOIlist_file)
+
+mapview(list(UBM, ws,TSA),
+        col.regions = list("red", "green", "blue"))
+
 
 #select AOI
 source('02_Shiny_app.R')
@@ -49,7 +61,9 @@ shinyApp(ui = ui, server = server)
 
 AOInum<-as.integer(responses[[1]])
 
-AOI<-AOIlist[AOInum]
+AOI<-AOIlist[[AOInum]]
+  st_crs(AOI)<-3005
+
 mapview(AOI)
 
 #ggplot(AOI) + geom_sf()
@@ -61,6 +75,7 @@ OGMA <- readRDS(file = 'tmp/OGMA') %>%
 
 Parks <- readRDS(file = 'tmp/Parks') %>%
   st_intersection(AOI) %>%
+  st_buffer(0) %>% #clean up topology
   st_cast("MULTIPOLYGON") #cast to multiprogam wasnt diplaying in mapview
 
 Conserve <- readRDS(file = 'tmp/Conserve') %>%
@@ -69,14 +84,27 @@ Conserve <- readRDS(file = 'tmp/Conserve') %>%
 
 LUobj <- readRDS(file = 'tmp/LUobj') %>%
   st_intersection(AOI) %>%
+  st_buffer(0) %>% #clean up topology
   st_cast("MULTIPOLYGON") #cast to multiprogam wasnt diplaying in mapview
 
-mapview(list(OGMA,Parks, LUobj))
+Caribou <- readRDS(file = 'tmp/Caribou') %>%
+  st_intersection(AOI) %>%
+  st_cast("MULTIPOLYGON") #cast to multiprogam wasnt diplaying in mapview
+
+UWR <- readRDS(file = 'tmp/UWR') %>%
+  st_intersection(AOI) %>%
+  st_buffer(0) %>% #clean up topology
+  st_cast("MULTIPOLYGON") #cast to multiprogam wasnt diplaying in mapview
+
 mapview(list(OGMA, Parks, LUobj),
         col.regions = list("red", "green", "blue"))
 
 #ggplot(OGMAc) + geom_sf()
-#st_write(OGMAc, file.path(spatialOutDir, "OGMAc.gpkg"), delete_layer = TRUE)
+st_write(OGMA, file.path(spatialOutDir, "OGMA.gpkg"), delete_layer = TRUE)
+st_write(Parks, file.path(spatialOutDir, "Parks.gpkg"), delete_layer = TRUE)
+st_write(LUobj, file.path(spatialOutDir, "LUobj.gpkg"), delete_layer = TRUE)
+st_write(Caribou, file.path(spatialOutDir, "Caribou.gpkg"), delete_layer = TRUE)
+st_write(UWR, file.path(spatialOutDir, "UWR.gpkg"), delete_layer = TRUE)
 
 ws <- readRDS(file = 'tmp/ws') %>%
   st_intersection(AOI)
