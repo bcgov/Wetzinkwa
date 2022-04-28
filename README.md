@@ -1,12 +1,5 @@
 ### Wetland Ecosystem Services Protocol (WESP) Sample Draw
 
-    {r, echo = FALSE}
-    knitr::opts_chunk$set(
-    collapse = TRUE,
-    comment = "#>",
-    fig.path = "README-"
-    )
-
 <!-- Add a project state badge
 See https://github.com/BCDevExchange/Our-Project-Docs/blob/master/discussion/projectstates.md
 If you have bcgovr installed and you use RStudio, click the 'Insert BCDevex Badge' Addin. -->
