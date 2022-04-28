@@ -66,6 +66,10 @@ AOI<-AOIlist[[AOInum]]
 
 mapview(AOI)
 
+wsau <-readRDS(file='tmp/wsau') %>%
+  st_intersection(AOI) %>%
+  st_buffer(0)
+
 #ggplot(AOI) + geom_sf()
 #st_write(AOI, file.path(spatialOutDir, "AOI.gpkg"), delete_layer = TRUE)
 
@@ -95,6 +99,8 @@ UWR <- readRDS(file = 'tmp/UWR') %>%
   st_intersection(AOI) %>%
   st_buffer(0) %>% #clean up topology
   st_cast("MULTIPOLYGON") #cast to multiprogam wasnt diplaying in mapview
+
+
 
 mapview(list(OGMA, Parks, LUobj),
         col.regions = list("red", "green", "blue"))

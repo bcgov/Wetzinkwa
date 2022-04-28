@@ -48,7 +48,17 @@ ws <- get_layer("wsc_drainages", class = "sf") %>%
 st_crs(ws)<-3005
 saveRDS(ws, file = "tmp/ws")
 
-#mapview(ws)+mapview(UBM)
+#What maps are in bcmaps? BCm<-bcmaps::available_layers()
+wsau_file<- file.path('tmp/wsau')
+if (!file.exists(wsau_file)) {
+  wsau<-bcdc_get_data("WHSE_BASEMAPPING.FWA_ASSESSMENT_WATERSHEDS_POLY")
+    #filter(TSA_NUMBER_DESCRIPTION %in% c("Morice TSA","Bulkley TSA","Lakes TSA"))
+  st_crs(wsau)<-3005
+  saveRDS(wsau, file = "tmp/wsau")
+}
+TSA<-readRDS(file='tmp/wsau')
+
+
 
 #Grab data from data catalogue
 #Morice TSA
