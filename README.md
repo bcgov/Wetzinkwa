@@ -1,2 +1,73 @@
-# Wetzinkwa
-Data organising for Wetzinkwa planning area
+### Wetland Ecosystem Services Protocol (WESP) Sample Draw
+
+    {r, echo = FALSE}
+    knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>",
+    fig.path = "README-"
+    )
+
+<!-- Add a project state badge
+See https://github.com/BCDevExchange/Our-Project-Docs/blob/master/discussion/projectstates.md
+If you have bcgovr installed and you use RStudio, click the 'Insert BCDevex Badge' Addin. -->
+
+# Wetzin’kwa
+
+This repository organizes data for the Wetzink’wa area.
+
+### Usage
+
+There are a series core scripts that are required for the analysis, they
+can be sourced from the run\_\_all.R script, the scripts run include:
+
+-   01_load.R
+-   02_clean.R, calls:
+    -   02_Shiny_app.R
+    -   02_Shiny_ui.R
+    -   02_Shiny_Server.R
+-   03_analysis
+-   04_output.R
+
+### Data
+
+Input data is from BC Data Warehouse
+
+### Project Status
+
+This project is in development.
+
+### Getting Help or Reporting an Issue
+
+To report bugs/issues/feature requests, please file an
+[issue](https://github.com/bcgov/Wetland_Summary/issues/).
+
+### How to Contribute
+
+If you would like to contribute, please see our
+[CONTRIBUTING](CONTRIBUTING.md) guidelines.
+
+Please note that this project is released with a [Contributor Code of
+Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree
+to abide by its terms.
+
+### License
+
+    Copyright 2020 Province of British Columbia
+
+    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and limitations under the License.
+
+------------------------------------------------------------------------
+
+*This project was created using the
+[bcgovr](https://github.com/bcgov/bcgovr) package.*
+
+This repository is maintained by
+[ENVEcosystems](https://github.com/orgs/bcgov/teams/envecosystems/members).
